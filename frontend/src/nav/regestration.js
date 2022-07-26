@@ -2,15 +2,20 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react';
 import { Validation } from '../nav/validation';
+import { Module } from './module';
+
 
 
 
 
 export const Regestration = () => {
-  const nav=useNavigate();
+  const nav=useNavigate()
+   const[list,setList]=useState([])
+  const[openmodel,setOpenmodel]=useState(false);
   const[error,setError]=useState("")
   const[show ,setShow]=useState('')
   const[people,setPeople]=useState({
+ 
 email:"",
 name:"",
 age:"",
@@ -20,32 +25,36 @@ password:"",
 rpassword:"",
 
 });
-const[list,setList]=useState([])
+
 const handelinputs=(e)=>{
     const names=e.target.name
     const val=e.target.value
     setPeople({...people,[names]:val})
-    
+ 
   }
   const handelsubmit=(e)=>{
-  
-    if(Validation){
-
-      setError(Validation(people))
-      setPeople({email:"",name:"",age:"",address:"",username:"",password:"",rpassword:""})
-      const num={...people,id:new Date().getTime().toString()}
-      setList(...list,num)
-     
-    }
-
-  
-      
     
+ if(!people.address||!people.age||!people.email||!people.name||!people.password||!people.username||!people.rpassword){
+   setError(Validation(people)) 
+   alert("succes")
+  }else 
+    alert("no error")
+
+    const newlist={id:new Date().getTime().toString(),people}
+    setList([...list,newlist])
+    setOpenmodel(true)
+    setPeople({email:"",name:"",age:"",address:"",username:"",password:"",rpassword:""}) 
+    
+  
+ 
    
+    
   }
   const option=()=>{
     setShow(!show)
   }
+  
+
   return (
     <>
     <div className='textbox'>
@@ -118,7 +127,8 @@ const handelinputs=(e)=>{
           {error.rpassword &&<p className='errors'>{error.rpassword}</p>}
       </div>
       <div className='inputbox'>
-    <button  onClick={handelsubmit }>Register</button>
+      <button  onClick={handelsubmit } >Register</button>
+     {openmodel && <Module peoples={list}/>}
       </div>
     
  

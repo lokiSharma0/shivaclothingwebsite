@@ -1,6 +1,6 @@
-
-
+ 
 export const  Validation = (people) => {
+  
     let error={}
     if(!people.email){
     error.email='email required'
@@ -35,13 +35,11 @@ export const  Validation = (people) => {
         error.rpassword='Enter same password'
      }else if(people.rpassword !==people.password){
         error.rpassword='Password not match'
-     }else{
-        alert('Success')
-        
      }
 
 
   return error
+  
  
   
 }
